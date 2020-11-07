@@ -20,8 +20,8 @@ Future<UserInfo> getUserInfoApi(token) async {
     var data = {"app_token": token};
     var result = await Dio().get(apiMap['userInfo'], queryParameters: data);
     var resp = UserInfo.fromJson(json.decode(result.data));
-    LogUtil.v("传入参数" + data.toString());
-    LogUtil.v("响应文本" + result.data);
+    LogUtil.v("getUserInfoApi传入参数" + data.toString());
+    LogUtil.v("getUserInfoApi响应文本" + result.data);
     return resp;
   } catch (e) {
     print("object");
@@ -35,8 +35,8 @@ Future<Login> getTokenApi(mobile, msgCode) async {
   var data = {"mobile": mobile, "code": msgCode};
   var result = await Dio().get(apiMap['login'], queryParameters: data);
   var resp = Login.fromJson(json.decode(result.data));
-  LogUtil.v("传入参数" + data.toString());
-  LogUtil.v("响应文本" + result.data);
+  LogUtil.v("getUserInfoApi传入参数" + data.toString());
+  LogUtil.v("getUserInfoApi响应文本" + result.data);
   return resp;
 }
 
@@ -53,7 +53,7 @@ Future<Msgcode> getMsgCodeApi(mobile) async {
   };
   var result = await Dio().get(apiMap['msgCode'], queryParameters: data);
   var resp = Msgcode.fromJson(json.decode(result.data));
-  LogUtil.v("传入参数" + data.toString());
-  LogUtil.v("响应文本" + result.data);
+  LogUtil.v("getUserInfoApi传入参数" + data.toString());
+  LogUtil.v("getUserInfoApi响应文本" + result.data);
   return resp;
 }

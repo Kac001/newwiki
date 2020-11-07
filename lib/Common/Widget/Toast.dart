@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-toastMsg({text = "", timeInSecForIosWeb = 5}) async {
+toastMsg(
+    {text = "",
+    timeInSecForIosWeb = 5,
+    ToastGravity gravity = ToastGravity.CENTER}) async {
   Fluttertoast.showToast(
     msg: text, //提示信息
     toastLength: Toast.LENGTH_LONG, //提示框的长短
-    gravity: ToastGravity.CENTER, //提示框显示位置
+    gravity: gravity, //提示框显示位置
     timeInSecForIosWeb: timeInSecForIosWeb, //提示框停留秒数 仅限IOS和web
 
     backgroundColor: Colors.grey, //提示框背景颜色

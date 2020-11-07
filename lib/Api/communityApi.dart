@@ -17,7 +17,7 @@ Future<Activity> getActivityApi(token) async {
   var data = {"app_token": token, "pageNum": 1, "whereStr": "normalTime"};
   var result = await Dio().get(apiMap['activity'], queryParameters: data);
   var resp = Activity.fromJson(json.decode(result.data));
-  LogUtil.v("响应文本" + result.data);
-  LogUtil.v("传入参数" + data.toString());
+  LogUtil.v("getActivityApi响应文本" + result.data);
+  LogUtil.v("getActivityApi传入参数" + data.toString());
   return resp;
 }

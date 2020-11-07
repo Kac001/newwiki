@@ -23,15 +23,15 @@ class HomeSwipe {
 }
 
 class Data {
-  List<Result> result;
+  List<HomeSwipeResult> result;
 
   Data({this.result});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['result'] != null) {
-      result = new List<Result>();
+      result = new List<HomeSwipeResult>();
       json['result'].forEach((v) {
-        result.add(new Result.fromJson(v));
+        result.add(new HomeSwipeResult.fromJson(v));
       });
     }
   }
@@ -45,7 +45,7 @@ class Data {
   }
 }
 
-class Result {
+class HomeSwipeResult {
   int id;
   int moduleId;
   int titleId;
@@ -57,7 +57,7 @@ class Result {
   int createDt;
   String endDt;
 
-  Result(
+  HomeSwipeResult(
       {this.id,
       this.moduleId,
       this.titleId,
@@ -69,7 +69,7 @@ class Result {
       this.createDt,
       this.endDt});
 
-  Result.fromJson(Map<String, dynamic> json) {
+  HomeSwipeResult.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     moduleId = json['moduleId'];
     titleId = json['titleId'];

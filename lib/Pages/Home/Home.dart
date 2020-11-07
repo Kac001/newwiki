@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newwiki/Api/Home/homeApi.dart';
 import 'package:newwiki/Api/userApi.dart';
+import 'package:newwiki/Common/Widget/Toast.dart';
 import 'package:newwiki/Model/Home/HomeSwipe.dart';
 import 'package:newwiki/Model/Home/PermissionsList.dart';
+import 'package:newwiki/Model/Home/newsReport.dart';
 import 'package:newwiki/Model/User/userInfo.dart';
 import 'package:newwiki/Services/ScreenAdaper.dart';
 import 'package:newwiki/Services/Storage/tokenStorage.dart';
@@ -46,52 +51,152 @@ Widget appModule(List<Permissions> permissionsList) {
         spacing: 5.0,
         runSpacing: 0.0,
         children: permissionsList.map((value) {
-          return Container(
-            // margin: EdgeInsets.fromLTRB(ScreenAdaper.width(30),
-            //     ScreenAdaper.height(10), ScreenAdaper.width(20), 0),
-            height: ScreenAdaper.height(110),
-            width: ScreenAdaper.width(135),
-            child: Column(
-              children: [
-                Image.network(
-                  value.imgPath,
-                  fit: BoxFit.cover,
-                  height: ScreenAdaper.height(70),
-                  width: ScreenAdaper.width(70),
+          return GestureDetector(
+              onTap: () {
+                toastMsg(text: "正在开发中~", gravity: ToastGravity.CENTER);
+              },
+              child: Container(
+                // margin: EdgeInsets.fromLTRB(ScreenAdaper.width(30),
+                //     ScreenAdaper.height(10), ScreenAdaper.width(20), 0),
+                height: ScreenAdaper.height(110),
+                width: ScreenAdaper.width(135),
+                child: Column(
+                  children: [
+                    Image.network(
+                      value.imgPath,
+                      fit: BoxFit.cover,
+                      height: ScreenAdaper.height(70),
+                      width: ScreenAdaper.width(70),
+                    ),
+                    Text(
+                      value.name,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "apple",
+                      ),
+                    )
+                  ],
                 ),
-                Text(
-                  value.name,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "apple",
-                  ),
-                )
-              ],
-            ),
-          );
-        }).toList()
-        // Container(
-        //   // margin: EdgeInsets.fromLTRB(ScreenAdaper.width(30),
-        //   //     ScreenAdaper.height(10), ScreenAdaper.width(20), 0),
-        //   child: Column(
-        //     children: [
-        //       Image.asset(
-        //         "images/index/atnd.png",
-        //         fit: BoxFit.cover,
-        //         height: ScreenAdaper.height(80),
-        //         width: ScreenAdaper.width(80),
-        //       ),
-        //       Text(
-        //         "考勤",
-        //         style: TextStyle(fontSize: 12),
-        //       )
-        //     ],
-        //   ),
-        // ),
-
-        ),
+              ));
+        }).toList()),
   );
+}
+
+//参林快报widget
+//todo 差跳转没写
+class newsReportWidget extends StatefulWidget {
+  newsReportWidget({Key key}) : super(key: key);
+
+  @override
+  _newRepoetState createState() => _newRepoetState();
+}
+
+class _newRepoetState extends State<newsReportWidget>
+    with WidgetsBindingObserver {
+  GlobalKey _myKey = new GlobalKey();
+  ScrollController _controller;
+  int index = 0;
+  List<newsReportResult> newsReportList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getNewsReport();
+    WidgetsBinding widgetsBinding = WidgetsBinding.instance;
+    widgetsBinding.addPostFrameCallback((callback) {
+      Timer.periodic(new Duration(seconds: 5), (timer) {
+        index += _myKey.currentContext.size.height.toInt();
+        print((index - _myKey.currentContext.size.height.toInt()).toDouble());
+        print(_controller.position.maxScrollExtent);
+        _controller.animateTo(index.toDouble(),
+            duration: new Duration(seconds: 1), curve: Curves.easeOutSine);
+
+        if ((index - _myKey.currentContext.size.height.toInt()).toDouble() >
+            _controller.position.maxScrollExtent - 3) {
+          print("stop");
+          _controller.jumpTo(_controller.position.minScrollExtent);
+          index = 0;
+        }
+      });
+    });
+
+    _controller = new ScrollController(initialScrollOffset: 0);
+  }
+
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  getNewsReport() async {
+    var token = await TokenStorage.getToken();
+
+    var resp = getnewsReportApi(token);
+    resp.then((value) {
+      setState(() {
+        newsReportList.addAll(value.data.result);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenAdaper.height(50),
+      width: ScreenAdaper.width(375),
+      color: Color.fromRGBO(247, 244, 198, 1),
+      child: Row(
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: 15, right: 10),
+            height: ScreenAdaper.height(70),
+            width: ScreenAdaper.width(120),
+            child: Image.asset("images/index/newsreport.png"),
+          ),
+          Container(
+            height: ScreenAdaper.height(50),
+            width: ScreenAdaper.width(450),
+            child: ListView.builder(
+                key: _myKey,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: this.newsReportList.length,
+                itemExtent: ScreenAdaper.height(50),
+                scrollDirection: Axis.vertical,
+                controller: _controller,
+                itemBuilder: (context, index) {
+                  return Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(bottom: ScreenAdaper.height(5)),
+                    child: Text(
+                      this.newsReportList[index].articleTitle,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  );
+                }),
+          ),
+          Container(
+            padding: EdgeInsets.only(
+                bottom: ScreenAdaper.height(5), left: ScreenAdaper.width(40)),
+            child: Text(
+              "|",
+              style: TextStyle(
+                  fontSize: 14, color: Color.fromRGBO(128, 128, 128, 1)),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(
+                bottom: ScreenAdaper.height(5), left: ScreenAdaper.width(10)),
+            child: Text(
+              "更多",
+              style: TextStyle(
+                  fontSize: 14, color: Color.fromRGBO(128, 128, 128, 1)),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
 
 //参林快报
@@ -281,7 +386,7 @@ class _newsTabbarState extends State<newsTabbar> {
 class _HomepageState extends State<Homepage>
     with AutomaticKeepAliveClientMixin {
   List<User> userinfo = [];
-  List<Result> swipeList = [];
+  List<HomeSwipeResult> swipeList = [];
   List<Permissions> _permissionsList = [];
 
   @override
@@ -335,7 +440,8 @@ class _HomepageState extends State<Homepage>
           SizedBox(
             height: ScreenAdaper.height(20),
           ),
-          newsReport(),
+          // newsReport(),
+          newsReportWidget(),
           newsTabbar()
         ],
       ),
