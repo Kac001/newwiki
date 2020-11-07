@@ -103,18 +103,23 @@ class _newRepoetState extends State<newsReportWidget>
   void initState() {
     super.initState();
     getNewsReport();
+    //来监听 是否build完成
     WidgetsBinding widgetsBinding = WidgetsBinding.instance;
+    ////节点build完成的回调
     widgetsBinding.addPostFrameCallback((callback) {
       Timer.periodic(new Duration(seconds: 5), (timer) {
+        //根据容器高度 判断出，当前item结尾，下一条item的开始位置,用于跳转到下一条item进行翻页
         index += _myKey.currentContext.size.height.toInt();
-        print((index - _myKey.currentContext.size.height.toInt()).toDouble());
-        print(_controller.position.maxScrollExtent);
+        // print((index - _myKey.currentContext.size.height.toInt()).toDouble());
+        // print(_controller.position.maxScrollExtent);
+        //跳转到当前item结尾，下一条item的开始位置,跳转速度为1秒 curve为跳转效果  Curves.easeOutSine滚蛋翻页
         _controller.animateTo(index.toDouble(),
             duration: new Duration(seconds: 1), curve: Curves.easeOutSine);
-
+        //如果当前item结尾，下一条item到了listview的结尾
         if ((index - _myKey.currentContext.size.height.toInt()).toDouble() >
             _controller.position.maxScrollExtent - 3) {
-          print("stop");
+          // print("stop");
+          //返回到listview的开头
           _controller.jumpTo(_controller.position.minScrollExtent);
           index = 0;
         }

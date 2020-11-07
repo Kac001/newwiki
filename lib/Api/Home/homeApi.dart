@@ -22,7 +22,7 @@ Future<newsReport> getnewsReportApi(token) async {
   var resp = newsReport.fromJson(json.decode(result.data));
   LogUtil.v("getnewsReportApi响应文本" + result.data);
   LogUtil.v("getnewsReportApi传入参数" + data.toString());
-  print(result.data);
+  // print(result.data);
   return resp;
 }
 
