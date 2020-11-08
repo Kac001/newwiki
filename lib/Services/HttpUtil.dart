@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import '../config.dart';

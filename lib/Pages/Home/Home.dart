@@ -32,10 +32,7 @@ Widget swiperWidget(swipeList) {
             autoplay: true,
             itemCount: swipeList.length,
             itemBuilder: (BuildContext context, int index) {
-              return CachedNetworkImage(
-                imageUrl: swipeList[index].imgPath,
-                fit: BoxFit.cover,
-              );
+              return Image.network(swipeList[index].imgPath, fit: BoxFit.cover);
             }),
       ));
 }
