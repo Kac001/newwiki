@@ -1,10 +1,9 @@
-import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:flustars/flustars.dart';
 import 'package:newwiki/Model/User/login.dart';
 import 'package:newwiki/Model/User/msgCode.dart';
 import 'package:newwiki/Model/User/userInfo.dart';
+import 'package:newwiki/Services/HttpUtil.dart';
 import '../config.dart';
 
 var apiMap = {
@@ -16,16 +15,10 @@ var apiMap = {
 /// 获取用户信息
 /// @param token 用户密钥
 Future<UserInfo> getUserInfoApi(token) async {
-  try {
-    var data = {"app_token": token};
-    var result = await Dio().get(apiMap['userInfo'], queryParameters: data);
-    var resp = UserInfo.fromJson(json.decode(result.data));
-    LogUtil.v("getUserInfoApi传入参数" + data.toString());
-    LogUtil.v("getUserInfoApi响应文本" + result.data);
-    return resp;
-  } catch (e) {
-    print("object");
-  }
+  var data = {"app_token": token};
+  var result = await HttpUtil().get(apiMap['userInfo'], data: data);
+  var resp = UserInfo.fromJson(json.decode(result.data));
+  return resp;
 }
 
 /// 获取登陆token
@@ -33,10 +26,8 @@ Future<UserInfo> getUserInfoApi(token) async {
 /// @param smsKey  加密key(dsl123+手机号码+dsl123)
 Future<Login> getTokenApi(mobile, msgCode) async {
   var data = {"mobile": mobile, "code": msgCode};
-  var result = await Dio().get(apiMap['login'], queryParameters: data);
+  var result = await HttpUtil().get(apiMap['login'], data: data);
   var resp = Login.fromJson(json.decode(result.data));
-  LogUtil.v("getUserInfoApi传入参数" + data.toString());
-  LogUtil.v("getUserInfoApi响应文本" + result.data);
   return resp;
 }
 
@@ -51,9 +42,7 @@ Future<Msgcode> getMsgCodeApi(mobile) async {
         .toString()
         .toUpperCase()
   };
-  var result = await Dio().get(apiMap['msgCode'], queryParameters: data);
+  var result = await HttpUtil().get(apiMap['msgCode'], data: data);
   var resp = Msgcode.fromJson(json.decode(result.data));
-  LogUtil.v("getUserInfoApi传入参数" + data.toString());
-  LogUtil.v("getUserInfoApi响应文本" + result.data);
   return resp;
 }

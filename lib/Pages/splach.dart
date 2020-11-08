@@ -25,7 +25,7 @@ class _SplachPageState extends State<SPlachPage> {
     // TODO: implement initState
     super.initState();
     //初始化日志
-    LogUtil.init(isDebug: false, maxLen: 10000);
+    LogUtil.init(isDebug: true, maxLen: 10000);
 
     startHome();
     recountdown();
