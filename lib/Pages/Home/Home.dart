@@ -48,7 +48,7 @@ Widget appModule(List<Permissions> permissionsList) {
     child: Wrap(
         alignment: WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: 5.0,
+        spacing: 0.0,
         runSpacing: 0.0,
         children: permissionsList.map((value) {
           return GestureDetector(
@@ -59,7 +59,7 @@ Widget appModule(List<Permissions> permissionsList) {
                 // margin: EdgeInsets.fromLTRB(ScreenAdaper.width(30),
                 //     ScreenAdaper.height(10), ScreenAdaper.width(20), 0),
                 height: ScreenAdaper.height(110),
-                width: ScreenAdaper.width(135),
+                width: ScreenAdaper.width(142),
                 child: Column(
                   children: [
                     Image.network(
@@ -70,6 +70,7 @@ Widget appModule(List<Permissions> permissionsList) {
                     ),
                     Text(
                       value.name,
+                      maxLines: 1,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
@@ -94,20 +95,27 @@ class newsReportWidget extends StatefulWidget {
 
 class _newRepoetState extends State<newsReportWidget>
     with WidgetsBindingObserver {
+  //定义滚动翻页组件的WidgetKey
   GlobalKey _myKey = new GlobalKey();
+  //定义滚动翻页组件的ScrollController
   ScrollController _controller;
+  //定义滚动翻页组件的定时器
+  Timer _timer;
+  //定义滚动翻页组件 Listview的起始位置
   int index = 0;
+  //定义滚动翻页组件 Listview数据
   List<newsReportResult> newsReportList = [];
+  //定义监听widget声明周期类
+  WidgetsBinding widgetsBinding = WidgetsBinding.instance;
 
   @override
   void initState() {
     super.initState();
     getNewsReport();
-    //来监听 是否build完成
-    WidgetsBinding widgetsBinding = WidgetsBinding.instance;
-    ////节点build完成的回调
+
+    ////build完成的回调,Build结束，你的回调就会执行
     widgetsBinding.addPostFrameCallback((callback) {
-      Timer.periodic(new Duration(seconds: 5), (timer) {
+      _timer = Timer.periodic(new Duration(seconds: 5), (timer) {
         //根据容器高度 判断出，当前item结尾，下一条item的开始位置,用于跳转到下一条item进行翻页
         index += _myKey.currentContext.size.height.toInt();
         // print((index - _myKey.currentContext.size.height.toInt()).toDouble());
@@ -131,6 +139,7 @@ class _newRepoetState extends State<newsReportWidget>
 
   void dispose() {
     _controller.dispose();
+    _timer.cancel();
     super.dispose();
   }
 

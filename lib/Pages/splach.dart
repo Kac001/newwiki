@@ -26,14 +26,17 @@ class _SplachPageState extends State<SPlachPage> {
     super.initState();
     //初始化日志
     LogUtil.init(isDebug: true, maxLen: 10000);
+    //系统倒计时
     startHome();
+    //跳过倒计时按钮
     recountdown();
   }
 
   //跳转首页和检查token
   jumpToIndex() async {
-    //缓存token
+    //提取缓存token
     var token = await TokenStorage.getToken();
+    //缓存token为空就跳转登陆也
     if (token == null) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil("/login", (Route route) => false);
@@ -82,6 +85,7 @@ class _SplachPageState extends State<SPlachPage> {
     });
   }
 
+  //页面销毁
   void dispose() {
     _countdownTimer?.cancel();
     _countdownTimer = null;

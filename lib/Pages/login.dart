@@ -106,8 +106,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   //登陆Dialog
-  showLoadingDialog() async {
-    await showDialog(
+  showLoadingDialog() {
+    showDialog(
       context: context,
       barrierDismissible: false, //点击遮罩不关闭对话框
       builder: (context) {
