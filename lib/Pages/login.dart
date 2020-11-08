@@ -40,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
       });
   }
 
+  //请求短信验证码
   getMsgCode() async {
     if (this._mobile != "" && this._mobile.length == 11) {
       //发送验证码回调
@@ -76,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  //登陆接口
   login() async {
     showLoadingDialog();
     if (this._mobile != "" &&
@@ -103,8 +105,9 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  showLoadingDialog() {
-    showDialog(
+  //登陆Dialog
+  showLoadingDialog() async {
+    await showDialog(
       context: context,
       barrierDismissible: false, //点击遮罩不关闭对话框
       builder: (context) {

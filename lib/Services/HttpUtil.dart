@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flustars/flustars.dart';
+import 'package:flutter/material.dart';
 import '../config.dart';
 
 ///网络请求封装类
@@ -38,18 +39,13 @@ class HttpUtil {
       responseType: ResponseType.json,
     );
     dio = Dio(options);
-    dio.interceptors
-        .add(DioCacheManager(CacheConfig(baseUrl: domain)).interceptor);
   }
 
   get(url, {data, options, cancelToken}) async {
     Response response;
     try {
       response = await dio.get(url,
-          queryParameters: data,
-          options: buildCacheOptions(Duration(days: 1),
-              options: options, maxStale: Duration(days: 3)),
-          cancelToken: cancelToken);
+          queryParameters: data, options: options, cancelToken: cancelToken);
       LogUtil.v("------------------------------------------");
       LogUtil.v("请求地址:" + response.request.uri.toString());
       LogUtil.v("响应文本:" + response.data);

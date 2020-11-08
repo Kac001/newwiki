@@ -26,7 +26,6 @@ class _SplachPageState extends State<SPlachPage> {
     super.initState();
     //初始化日志
     LogUtil.init(isDebug: true, maxLen: 10000);
-
     startHome();
     recountdown();
   }
@@ -35,6 +34,11 @@ class _SplachPageState extends State<SPlachPage> {
   jumpToIndex() async {
     //缓存token
     var token = await TokenStorage.getToken();
+    if (token == null) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil("/login", (Route route) => false);
+      return;
+    }
     print("启动页面获取token:" + token.toString());
     var resp = getUserInfoApi(token);
     resp.then((value) {
