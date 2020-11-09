@@ -25,6 +25,9 @@ class _LoginPageState extends State<LoginPage> {
   String _codeCountdownStr = "发送验证码";
   Timer _countdownTimer;
   bool _countdownLock = false;
+  //定义输入框焦点
+  final FocusNode focusNodeUsername = FocusNode();
+  final FocusNode focusNodeMsgcode = FocusNode();
 
   @override
   void initState() {
@@ -101,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       });
     } else {
+      Navigator.of(context).pop();
       toastMsg(text: "手机号码输入错误");
     }
   }
@@ -132,163 +136,178 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text("登陆"),
+          centerTitle: true,
           elevation: 0,
           automaticallyImplyLeading: false,
         ),
-        body: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-                padding: EdgeInsets.only(
-                    top: ScreenAdaper.height(50), left: ScreenAdaper.width(70)),
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "手机号码",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(width: ScreenAdaper.width(30)),
-                        Container(
-                          height: ScreenAdaper.height(60),
-                          width: ScreenAdaper.width(450),
-                          child: TextField(
-                            controller: this._usernameController,
-                            maxLength: 11,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                                counterText: "", //限制maxLength带来的字数限制显示
-                                contentPadding:
-                                    EdgeInsets.only(top: 10, left: 5),
-                                fillColor: Color.fromRGBO(242, 242, 242, 1),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0x00FF0000))),
-                                hintText: "请输入手机号码",
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0x00000000)),
-                                )),
+        body: GestureDetector(
+          onTap: () {
+            //点击页面全局区域关闭输入框
+            setState(() {
+              focusNodeUsername.unfocus();
+              focusNodeMsgcode.unfocus();
+            });
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                  padding: EdgeInsets.only(
+                      top: ScreenAdaper.height(50),
+                      left: ScreenAdaper.width(70)),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "手机号码",
+                            style: TextStyle(fontSize: 16),
                           ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: ScreenAdaper.height(10),
-                    ),
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "验证码",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(width: ScreenAdaper.width(60)),
-                        Container(
-                          height: ScreenAdaper.height(60),
-                          width: ScreenAdaper.width(250),
-                          child: TextField(
-                            controller: this._msgCodeController,
-                            decoration: InputDecoration(
-                                counterText: "",
-                                contentPadding:
-                                    EdgeInsets.only(top: 10, left: 5),
-                                fillColor: Color.fromRGBO(242, 242, 242, 1),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
+                          SizedBox(width: ScreenAdaper.width(30)),
+                          Container(
+                            height: ScreenAdaper.height(60),
+                            width: ScreenAdaper.width(450),
+                            child: TextField(
+                              //焦点
+                              focusNode: focusNodeUsername,
+                              controller: this._usernameController,
+                              maxLength: 11,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  counterText: "", //限制maxLength带来的字数限制显示
+                                  contentPadding:
+                                      EdgeInsets.only(top: 10, left: 5),
+                                  fillColor: Color.fromRGBO(242, 242, 242, 1),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0x00FF0000))),
+                                  hintText: "请输入手机号码",
+                                  focusedBorder: OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Color(0x00FF0000))),
-                                hintText: "请输入验证码",
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0x00000000)),
-                                )),
-                          ),
-                        ),
-                        SizedBox(width: ScreenAdaper.width(15)),
-                        GestureDetector(
-                          child: Container(
-                              alignment: Alignment.center,
-                              height: ScreenAdaper.height(50),
-                              width: ScreenAdaper.width(180),
-                              decoration: BoxDecoration(
-                                  color: _countdownLock
-                                      ? Colors.grey.shade500
-                                      : Color.fromRGBO(0, 186, 71, 1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4))),
-                              child: GestureDetector(
-                                child: Text(
-                                  _codeCountdownStr,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )),
-                          onTap: () {
-                            if (_countdownLock == false) {
-                              getMsgCode();
-                            }
-                          },
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: ScreenAdaper.height(30),
-                    ),
-                    GestureDetector(
-                      child: Container(
-                          alignment: Alignment.center,
-                          height: ScreenAdaper.height(70),
-                          width: ScreenAdaper.width(600),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(0, 186, 71, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: GestureDetector(
-                            child: Text(
-                              "登陆",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                                        BorderSide(color: Color(0x00000000)),
+                                  )),
                             ),
-                          )),
-                      onTap: () {
-                        setState(() {
-                          login();
-                        });
-                      },
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: ScreenAdaper.height(10),
+                      ),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "验证码",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(width: ScreenAdaper.width(60)),
+                          Container(
+                            height: ScreenAdaper.height(60),
+                            width: ScreenAdaper.width(250),
+                            child: TextField(
+                              //焦点
+                              focusNode: focusNodeMsgcode,
+                              controller: this._msgCodeController,
+                              decoration: InputDecoration(
+                                  counterText: "",
+                                  contentPadding:
+                                      EdgeInsets.only(top: 10, left: 5),
+                                  fillColor: Color.fromRGBO(242, 242, 242, 1),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0x00FF0000))),
+                                  hintText: "请输入验证码",
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0x00000000)),
+                                  )),
+                            ),
+                          ),
+                          SizedBox(width: ScreenAdaper.width(15)),
+                          GestureDetector(
+                            child: Container(
+                                alignment: Alignment.center,
+                                height: ScreenAdaper.height(50),
+                                width: ScreenAdaper.width(180),
+                                decoration: BoxDecoration(
+                                    color: _countdownLock
+                                        ? Colors.grey.shade500
+                                        : Color.fromRGBO(0, 186, 71, 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4))),
+                                child: GestureDetector(
+                                  child: Text(
+                                    _codeCountdownStr,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )),
+                            onTap: () {
+                              if (_countdownLock == false) {
+                                getMsgCode();
+                              }
+                            },
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: ScreenAdaper.height(30),
+                      ),
+                      GestureDetector(
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: ScreenAdaper.height(70),
+                            width: ScreenAdaper.width(600),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(0, 186, 71, 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4))),
+                            child: GestureDetector(
+                              child: Text(
+                                "登陆",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                            )),
+                        onTap: () {
+                          setState(() {
+                            login();
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        height: ScreenAdaper.height(10),
+                      ),
+                      GestureDetector(
+                        child: Text("注册申请账号",
+                            style: TextStyle(
+                                color: Color.fromRGBO(74, 144, 226, 1))),
+                      )
+                    ],
+                  )),
+              Positioned(
+                bottom: 50,
+                child: Text("版本号：V4.0.0(2020092702)"),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: double.infinity,
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: Image.asset(
+                      "images/login.png",
+                      fit: BoxFit.contain,
                     ),
-                    SizedBox(
-                      height: ScreenAdaper.height(10),
-                    ),
-                    GestureDetector(
-                      child: Text("注册申请账号",
-                          style: TextStyle(
-                              color: Color.fromRGBO(74, 144, 226, 1))),
-                    )
-                  ],
-                )),
-            Positioned(
-              bottom: 50,
-              child: Text("版本号：V4.0.0(2020092702)"),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: double.infinity,
-                child: Opacity(
-                  opacity: 0.2,
-                  child: Image.asset(
-                    "images/login.png",
-                    fit: BoxFit.contain,
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ));
   }
 }
