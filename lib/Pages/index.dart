@@ -61,7 +61,7 @@ class _IndexPageState extends State<IndexPage> {
               activeIcon:
                   ImageIcon(AssetImage("images/index/mission-select.png")),
               label: "任务"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "参林树海"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(
               icon: ImageIcon(AssetImage("images/index/talk.png")),
               activeIcon: ImageIcon(AssetImage("images/index/talk-select.png")),

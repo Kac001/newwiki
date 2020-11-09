@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/material.dart';
 import '../config.dart';
 
 ///网络请求封装类

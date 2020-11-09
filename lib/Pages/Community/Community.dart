@@ -120,6 +120,7 @@ class _CommunityPageState extends State<CommunityPage>
     return Scaffold(
       appBar: AppBar(
         title: Text("社区"),
+        centerTitle: true,
         elevation: 0,
         actions: [
           Container(

@@ -53,6 +53,7 @@ class _MissionPageState extends State<MissionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("任务"),
+        centerTitle: true,
         elevation: 0,
         bottom: TabBar(
           tabs: _tabbarList.map((e) {
