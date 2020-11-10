@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:newwiki/Model/Home/PermissionsList.dart';
-import 'package:newwiki/Model/Home/newsReport.dart';
+import 'package:newwiki/model/home/permissions_list.dart';
+import 'package:newwiki/model/home/news_report.dart';
 
 import '../../config.dart';
 import '../../Model/Home/HomeSwipe.dart';
-import '../../Services/HttpUtil.dart';
+import '../../services/http_util.dart';
 
 var apiMap = {
   "homeswipe": domain + "/app/hsowingmap/list.do", //轮播图接口

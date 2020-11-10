@@ -3,8 +3,8 @@ import 'package:newwiki/Pages/Community/Community.dart';
 import 'package:newwiki/Pages/Mission/Mission.dart';
 import 'package:newwiki/Pages/User/User.dart';
 import '../Pages/Home/Home.dart';
-import '../Widget/IndexAppbar.dart';
-import '../Services/ScreenAdaper.dart';
+import '../widget/index_appbar.dart';
+import '../Services/screen_adaper.dart';
 
 import 'package:common_utils/common_utils.dart';
 

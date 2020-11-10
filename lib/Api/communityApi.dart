@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:newwiki/Services/HttpUtil.dart';
+import 'package:newwiki/services/http_util.dart';
 
 import '../config.dart';
 import '../Model/community/activity.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newwiki/Api/userApi.dart';
-import 'package:newwiki/Model/User/userInfo.dart';
-import 'package:newwiki/Services/ScreenAdaper.dart';
-import 'package:newwiki/Services/Storage/tokenStorage.dart';
+import 'package:newwiki/model/user/user_info.dart';
+import 'package:newwiki/services/screen_adaper.dart';
+import 'package:newwiki/services/storage/token_storage.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({Key key}) : super(key: key);

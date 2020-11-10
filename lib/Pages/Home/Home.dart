@@ -8,12 +8,12 @@ import 'package:newwiki/Api/Home/homeApi.dart';
 import 'package:newwiki/Api/userApi.dart';
 import 'package:newwiki/Common/Widget/Toast.dart';
 import 'package:newwiki/Model/Home/HomeSwipe.dart';
-import 'package:newwiki/Model/Home/PermissionsList.dart';
-import 'package:newwiki/Model/Home/newsReport.dart';
-import 'package:newwiki/Model/User/userInfo.dart';
-import 'package:newwiki/Services/ScreenAdaper.dart';
-import 'package:newwiki/Services/Storage/tokenStorage.dart';
-import '../../Widget/IndexAppbar.dart';
+import 'package:newwiki/model/home/permissions_list.dart';
+import 'package:newwiki/model/home/news_report.dart';
+import 'package:newwiki/model/user/user_info.dart';
+import 'package:newwiki/services/screen_adaper.dart';
+import 'package:newwiki/services/storage/token_storage.dart';
+import '../../widget/index_appbar.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({Key key}) : super(key: key);

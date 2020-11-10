@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:newwiki/Api/userApi.dart';
 import 'package:newwiki/Common/Widget/Toast.dart';
-import 'package:newwiki/Services/ScreenAdaper.dart';
-import 'package:newwiki/Services/Storage/tokenStorage.dart';
+import '../Services/screen_adaper.dart';
+import 'package:newwiki/services/storage/token_storage.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -41,6 +41,11 @@ class _LoginPageState extends State<LoginPage> {
       ..addListener(() {
         _msgCode = _msgCodeController.text;
       });
+  }
+
+  void dispose() {
+    _countdownTimer?.cancel();
+    super.dispose();
   }
 
   //请求短信验证码
@@ -274,9 +279,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             )),
                         onTap: () {
-                          setState(() {
-                            login();
-                          });
+                          login();
                         },
                       ),
                       SizedBox(

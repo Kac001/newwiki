@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newwiki/Api/communityApi.dart';
 import 'package:newwiki/Common/Widget/Toast.dart';
-import 'package:newwiki/Services/ScreenAdaper.dart';
-import 'package:newwiki/Services/Storage/tokenStorage.dart';
+import 'package:newwiki/services/screen_adaper.dart';
+import 'package:newwiki/services/storage/token_storage.dart';
 import '../../Model/community/activity.dart';
 
 class CommunityPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:newwiki/Model/User/userInfo.dart';
-import 'package:newwiki/Services/ScreenAdaper.dart';
+import 'package:newwiki/model/user/user_info.dart';
+import 'package:newwiki/services/screen_adaper.dart';
 
 class IndexAppbat extends StatefulWidget implements PreferredSizeWidget {
   List<User> userinfo;

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:newwiki/Api/userApi.dart';
-import 'package:newwiki/Services/ScreenAdaper.dart';
-import 'package:newwiki/Services/Storage/tokenStorage.dart';
+import '../Services/screen_adaper.dart';
+import 'package:newwiki/services/storage/token_storage.dart';
 import 'package:common_utils/common_utils.dart';
 
 class SPlachPage extends StatefulWidget {
@@ -87,7 +87,7 @@ class _SplachPageState extends State<SPlachPage> {
 
   //页面销毁
   void dispose() {
-    _countdownTimer?.cancel();
+    _countdownTimer.cancel();
     _countdownTimer = null;
     _splachTimer.cancel();
     _splachTimer = null;

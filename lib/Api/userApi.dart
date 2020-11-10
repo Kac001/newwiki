@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:newwiki/Model/User/login.dart';
-import 'package:newwiki/Model/User/msgCode.dart';
-import 'package:newwiki/Model/User/userInfo.dart';
-import 'package:newwiki/Services/HttpUtil.dart';
+import 'package:newwiki/model/user/login.dart';
+import 'package:newwiki/model/user/msg_code.dart';
+import 'package:newwiki/model/user/user_info.dart';
+import 'package:newwiki/services/http_util.dart';
 import '../config.dart';
 
 var apiMap = {
