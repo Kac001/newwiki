@@ -11,7 +11,6 @@ class IndexAppbat extends StatefulWidget implements PreferredSizeWidget {
   _IndexAppbatState createState() => _IndexAppbatState();
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize {
     return Size.fromHeight(56.0);
   }

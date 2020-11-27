@@ -1,13 +1,12 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newwiki/Api/Home/homeApi.dart';
-import 'package:newwiki/Api/userApi.dart';
+import 'package:newwiki/api/user_api.dart';
 import 'package:newwiki/Common/Widget/Toast.dart';
-import 'package:newwiki/Model/Home/HomeSwipe.dart';
+import 'package:newwiki/model/home/home_swipe.dart';
 import 'package:newwiki/model/home/permissions_list.dart';
 import 'package:newwiki/model/home/news_report.dart';
 import 'package:newwiki/model/user/user_info.dart';
@@ -114,7 +113,7 @@ class _newRepoetState extends State<newsReportWidget>
     widgetsBinding.addPostFrameCallback((callback) {
       _timer = Timer.periodic(new Duration(seconds: 5), (timer) {
         //根据容器高度 判断出，当前item结尾，下一条item的开始位置,用于跳转到下一条item进行翻页
-        index += _myKey.currentContext.size.height.toInt();
+        index += _myKey.currentContext.size.height.toInt() + 1;
         // print((index - _myKey.currentContext.size.height.toInt()).toDouble());
         // print(_controller.position.maxScrollExtent);
         //跳转到当前item结尾，下一条item的开始位置,跳转速度为1秒 curve为跳转效果  Curves.easeOutSine滚蛋翻页
@@ -125,6 +124,8 @@ class _newRepoetState extends State<newsReportWidget>
             _controller.position.maxScrollExtent - 3) {
           // print("stop");
           //返回到listview的开头
+          // _controller.animateTo(_controller.position.minScrollExtent,
+          //     duration: new Duration(seconds: 1), curve: Curves.easeOutSine);
           _controller.jumpTo(_controller.position.minScrollExtent);
           index = 0;
         }
@@ -268,7 +269,6 @@ class _newsTabbarState extends State<newsTabbar> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = TabController(
       length: _tabbarList.length,
@@ -460,6 +460,5 @@ class _HomepageState extends State<Homepage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

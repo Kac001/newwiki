@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:newwiki/Api/userApi.dart';
+import 'package:newwiki/api/user_api.dart';
 import '../Services/screen_adaper.dart';
 import 'package:newwiki/services/storage/token_storage.dart';
 import 'package:common_utils/common_utils.dart';
@@ -14,15 +14,14 @@ class SPlachPage extends StatefulWidget {
 }
 
 class _SplachPageState extends State<SPlachPage> {
-  int _countdownNum = 2;
   String _codeCountdownStr = "3";
+  bool _countdownLock = true;
+  int _countdownNum = 2;
   Timer _countdownTimer;
   Timer _splachTimer;
-  bool _countdownLock = true;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //初始化日志
     LogUtil.init(isDebug: true, maxLen: 10000);

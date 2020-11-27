@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newwiki/Api/communityApi.dart';
+import 'package:newwiki/api/community_api.dart';
 import 'package:newwiki/Common/Widget/Toast.dart';
 import 'package:newwiki/services/screen_adaper.dart';
 import 'package:newwiki/services/storage/token_storage.dart';
@@ -109,7 +109,11 @@ class _CommunityPageState extends State<CommunityPage>
                   ],
                 )),
             onTap: () {
-              toastMsg(text: "正在开发中~");
+              // toastMsg(text: "正在开发中~");
+              Navigator.pushNamed(
+                context,
+                "/communitydetail",
+              );
             },
           );
         });
@@ -139,6 +143,5 @@ class _CommunityPageState extends State<CommunityPage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

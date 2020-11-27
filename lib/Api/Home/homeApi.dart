@@ -4,7 +4,7 @@ import 'package:newwiki/model/home/permissions_list.dart';
 import 'package:newwiki/model/home/news_report.dart';
 
 import '../../config.dart';
-import '../../Model/Home/HomeSwipe.dart';
+import '../../model/home/home_swipe.dart';
 import '../../services/http_util.dart';
 
 var apiMap = {

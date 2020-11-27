@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newwiki/Pages/login.dart';
 import 'package:newwiki/Pages/splach.dart';
+import 'package:newwiki/pages/community/community_detail.dart';
 import 'Pages/index.dart';
 
 //配置路由
@@ -8,6 +9,9 @@ final routes = {
   '/': (context) => IndexPage(),
   '/splach': (context) => SPlachPage(),
   '/login': (context) => LoginPage(),
+  //社区活动
+  '/communitydetail': (context) => CommunityDetailPage(),
+
   // '/productlist': (context, {arguments}) =>
   //     ProductListPage(arguments: arguments),
   // '/productdetail': (context, {arguments}) =>

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newwiki/Api/userApi.dart';
+import 'package:newwiki/api/user_api.dart';
 import 'package:newwiki/model/user/user_info.dart';
 import 'package:newwiki/services/screen_adaper.dart';
 import 'package:newwiki/services/storage/token_storage.dart';
@@ -18,7 +18,6 @@ class _UserPageState extends State<UserPage>
   void initState() {
     getUserInfo();
 
-    // TODO: implement initState
     super.initState();
   }
 
@@ -400,6 +399,5 @@ class _UserPageState extends State<UserPage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
