@@ -17,13 +17,13 @@ class ScreenAdaper {
     return ScreenUtil().setWidth(value);
   }
 
-  // static getscreenHeight() {
-  //   return ScreenUtil.screenHeight;
-  // }
+  static getscreenHeight() {
+    return ScreenUtil().screenHeight;
+  }
 
-  // static getscreenWidth() {
-  //   return ScreenUtil.screenWidth;
-  // }
+  static getscreenWidth() {
+    return ScreenUtil().screenWidth;
+  }
 
   ///根据手机屏幕适配文本大小
   ///传入字体大小，默认不根据系统的“字体大小”辅助选项来进行缩放

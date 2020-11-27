@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:newwiki/Pages/Community/Community.dart';
 import 'package:newwiki/Pages/Mission/Mission.dart';
 import 'package:newwiki/Pages/User/User.dart';
+import 'package:newwiki/services/screen_adaper.dart';
 import '../Pages/Home/Home.dart';
-import '../Services/screen_adaper.dart';
 
 class IndexPage extends StatefulWidget {
   IndexPage({Key key}) : super(key: key);
@@ -32,6 +32,7 @@ class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     ScreenAdaper.init(context);
+    print(ScreenAdaper.getscreenHeight() / 15);
     return Scaffold(
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
@@ -80,7 +81,7 @@ class _IndexPageState extends State<IndexPage> {
         height: ScreenAdaper.height(260),
         width: ScreenAdaper.width(178),
         // margin: EdgeInsets.only(top: 50),
-        padding: EdgeInsets.only(top: 60),
+        padding: EdgeInsets.only(top: ScreenAdaper.getscreenHeight() / 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24), color: Colors.transparent),
         child: FloatingActionButton(
